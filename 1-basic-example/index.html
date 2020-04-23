@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>fromEvent</title>
+</head>
+<body>
+    <div id="app"></div>
+</body>
+<footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/6.1.0/rxjs.umd.js"></script>
+    <script>
+        const op = rxjs.operators
+
+        rxjs.fromEvent(document, 'click')
+            .subscribe(() => console.log('Clicked!'));
+
+        rxjs.fromEvent(document, 'click')
+            .pipe(op.scan(count => count + 1, 0))
+            .subscribe(count => console.log(`Clicked ${count} times`));
+ 
+        rxjs.fromEvent(document, 'click')
+            .pipe(
+                op.throttleTime(1000),
+                op.scan(count => count + 1, 0)
+            )
+            .subscribe(count => console.log(`Clicked with timeout ${count} times`));
+
+    </script>
+</footer>
+</html>
